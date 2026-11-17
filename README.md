@@ -36,19 +36,74 @@ The **Setup** command shows a live diagnostic of all three pieces (libsecret too
 - Key storage relies on your desktop keyring's threat model, which is equivalent to the Windows DPAPI path of the original extension (per-user, per-boot unlock). Unlike the macOS version, codes retrieval does not re-prompt per access; use **Lock Vault Now** to drop the in-memory cache.
 - See [SECURITY.md](SECURITY.md) for details and responsible disclosure.
 
-## Development
+## Building
 
 ```bash
 npm install
-npx vici develop   # or: npm run dev
+npm run build
 ```
 
-Build checks:
+`npm run build` (vici build) type-checks the sources and installs the bundle into Vicinae's extension directory (`~/.local/share/vicinae/extensions/2fas-authenticator`). Exported commands become searchable in the root search immediately — no server restart required. Pass `-o <dir>` to write the bundle elsewhere (e.g. for CI artifacts) instead of installing.
+
+Other checks:
 
 ```bash
-npm run build
-npm run lint
+npm run lint          # manifest validation (vici lint)
+npx tsc --noEmit      # type-check only
+npm run format        # biome format
 ```
+
+## Testing
+
+```bash
+npm test
+```
+
+Runs the integration suite (node:test, bundled with esbuild via `tests/run.mjs`):
+
+- 2FAS export parsing: plain exports, password-protected exports (PBKDF2 + AES-256-GCM), wrong password rejection, HOTP-only entries skipped
+- RFC 6238 test vectors (e.g. SHA-1 / 8 digits at T=59 → `94287082`)
+- Keychain roundtrip against a real Secret Service: store → retrieve → delete
+- Vault lifecycle: create → load → replace (key reuse) → lock → delete, including `0600` file permissions
+
+Requirements: `secret-tool` and a running Secret Service provider. If either is missing, the keychain/vault tests are **skipped automatically** with a hint instead of failing, so the suite is still usable in minimal CI environments.
+
+**Your real vault is never touched by tests.** The suite writes vault files to a throwaway temp directory and uses a dedicated keyring namespace (`application=vicinae-2fas-test`) instead of the production one, so a vault you already imported stays untouched.
+
+## Installing into Vicinae
+
+### From this source tree
+
+```bash
+git clone <this-repo> 2fas-authenticator
+cd 2fas-authenticator
+npm install
+npm run build
+```
+
+That's it — open Vicinae's root search and look for **Search OTP**, **Recent OTP**, **Import Vault** or **Setup**. No restart needed.
+
+### Development mode
+
+```bash
+npm run dev    # or: npx vici develop
+```
+
+Starts a development session with hot reload. Note that a dev session and an installed (built) copy are treated as two separate extensions — running both shows duplicates in the UI, so uninstall one of them first.
+
+### From the Vicinae store
+
+Not published yet. The intended route is a PR to the [vicinaehq/extensions](https://github.com/vicinaehq/extensions) store repository; until then, install from source as above.
+
+### Uninstall
+
+Search **Uninstall Extension** in the root search, or delete `~/.local/share/vicinae/extensions/2fas-authenticator`. Deleting the extension does not remove your vault; use *Setup → Delete Vault* first if you want the encrypted vault file and the keyring entry gone too.
+
+## First run
+
+1. **Setup** — check the *Keyring (Secret Service)* diagnostics: libsecret tools, Secret Service provider and vault key should all be green (install hints are shown otherwise).
+2. **Import Vault** — pick your `.2fas` export file and enter the export password if you set one.
+3. **Search OTP** — live codes with 1-second refresh; Enter copies the code and closes the window.
 
 ## Credits
 

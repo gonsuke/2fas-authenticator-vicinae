@@ -19,13 +19,20 @@ const SECRET_TOOL = "secret-tool";
 
 const LABEL = "2FAS Authenticator vault key (Vicinae)";
 
-/** Attribute pairs identifying the vault key item in the Secret Service. */
-const KEY_ATTRIBUTES = [
-  "application",
-  "vicinae-2fas-authenticator",
-  "type",
-  "vault-key",
-];
+/**
+ * Attribute pairs identifying the vault key item in the Secret Service.
+ *
+ * The application attribute can be overridden through the environment so test
+ * runs write to a separate keyring namespace and cannot clobber a real vault
+ * key (tests spawn us with VICINAE_2FAS_KEY_NAMESPACE set).
+ */
+function keyApplicationAttribute(): string {
+  return process.env.VICINAE_2FAS_KEY_NAMESPACE || "vicinae-2fas-authenticator";
+}
+
+function keyAttributes(): string[] {
+  return ["application", keyApplicationAttribute(), "type", "vault-key"];
+}
 
 export class KeychainToolMissing extends Error {
   constructor() {
@@ -133,13 +140,13 @@ function runSecretTool(
 
 export function storeVaultKey(key: Buffer): void {
   runSecretTool(
-    ["store", "--label", LABEL, ...KEY_ATTRIBUTES],
+    ["store", "--label", LABEL, ...keyAttributes()],
     { input: key.toString("base64") },
   );
 }
 
 export function retrieveVaultKey(): Buffer {
-  const stdout = runSecretTool(["lookup", ...KEY_ATTRIBUTES], {
+  const stdout = runSecretTool(["lookup", ...keyAttributes()], {
     allowNotFound: true,
   });
   const raw = stdout.toString().trim();
@@ -159,7 +166,7 @@ export function retrieveVaultKey(): Buffer {
 
 export function deleteVaultKey(): void {
   try {
-    runSecretTool(["clear", ...KEY_ATTRIBUTES], { allowNotFound: true });
+    runSecretTool(["clear", ...keyAttributes()], { allowNotFound: true });
   } catch {
     // Key may not exist; deleting a missing item is not an error.
   }
@@ -167,7 +174,7 @@ export function deleteVaultKey(): void {
 
 export function isVaultKeyStored(): boolean {
   try {
-    const stdout = runSecretTool(["lookup", ...KEY_ATTRIBUTES], {
+    const stdout = runSecretTool(["lookup", ...keyAttributes()], {
       allowNotFound: true,
     });
     return stdout.toString().trim().length > 0;
@@ -195,9 +202,10 @@ export interface KeychainDiagnostic {
  */
 export function diagnoseKeychain(): KeychainDiagnostic {
   try {
-    runSecretTool(["lookup", "application", "vicinae-2fas-probe"], {
-      allowNotFound: true,
-    });
+    runSecretTool(
+      ["lookup", "application", `${keyApplicationAttribute()}-probe`],
+      { allowNotFound: true },
+    );
     return {
       toolAvailable: true,
       serviceAvailable: true,

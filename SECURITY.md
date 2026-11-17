@@ -31,5 +31,5 @@ If no Secret Service provider is running, vault creation and reads fail with act
 | Item | Path |
 | --- | --- |
 | Encrypted vault | `<supportPath>/vault.enc` (+ transient `.new` staging file) |
-| Vault key | Secret Service item with attributes `application=vicinae-2fas-authenticator`, `type=vault-key` |
+| Vault key | Secret Service item with attributes `application=vicinae-2fas-authenticator`, `type=vault-key` (namespace overridable via `VICINAE_2FAS_KEY_NAMESPACE`, used by the test suite) |
 | Recents cache | Vicinae LocalStorage (non-sensitive: ids, display names, timestamps, pins) |
