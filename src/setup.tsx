@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Adrian Galvez (LockeAG) — original 2FAS Authenticator
+// Raycast extension (https://github.com/LockeAG/raycast-2fas-authenticator).
+// Ported for Vicinae/Linux; see NOTICE.md.
+
 import { useState, useEffect, useCallback } from "react";
 import {
   List,
@@ -213,6 +218,30 @@ export default function Setup() {
             />
           </>
         )}
+      </List.Section>
+      <List.Section title="Credits">
+        <List.Item
+          icon={Icon.Person}
+          title="Original extension"
+          subtitle="2FAS Authenticator for Raycast by Adrian Galvez (LockeAG), MIT"
+          actions={
+            <ActionPanel>
+              <Action.OpenInBrowser
+                title="Open Upstream Repository"
+                url="https://github.com/LockeAG/raycast-2fas-authenticator"
+              />
+              <Action.OpenInBrowser
+                title="Open Raycast Listing"
+                url="https://www.raycast.com/Lock/2fas-authenticator"
+              />
+            </ActionPanel>
+          }
+        />
+        <List.Item
+          icon={Icon.Heart}
+          title="This port"
+          subtitle="Unofficial Linux/Vicinae port. Not affiliated with the upstream author, Raycast, or 2FAS."
+        />
       </List.Section>
     </List>
   );

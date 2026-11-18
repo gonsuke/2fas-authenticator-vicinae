@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 /**
  * Test double for @vicinae/api used by the integration tests.
  *

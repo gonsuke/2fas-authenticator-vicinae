@@ -2,9 +2,18 @@
 
 ## Reporting a vulnerability
 
-Please do not open a public issue for security-sensitive reports. Contact the maintainer privately (e.g. via a GitHub security advisory on this repository) and include steps to reproduce.
+Please do not open a public issue for security-sensitive reports. Use GitHub's
+private vulnerability reporting:
 
-For issues in the upstream logic (vault format, TOTP, 2FAS parsing) also consider reporting to the original Raycast extension author, since this port shares that code.
+<https://github.com/gonsuke/2fas-authenticator-vicinae/security/advisories/new>
+
+Include steps to reproduce and the affected version or commit.
+
+This is an unofficial port. For issues in the upstream logic (vault format,
+TOTP, 2FAS parsing), also consider reporting to the original Raycast extension
+author at <https://github.com/LockeAG/raycast-2fas-authenticator/issues>, since
+this port shares that code. Port-specific issues (Linux Secret Service, Vicinae
+integration) belong here.
 
 ## Threat model
 

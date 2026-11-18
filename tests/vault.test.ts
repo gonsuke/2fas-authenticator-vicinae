@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 /**
  * Integration tests: 2FAS export parsing, vault encryption roundtrip against
  * a real Secret Service, and RFC 6238 TOTP vectors.

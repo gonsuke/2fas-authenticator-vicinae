@@ -1,8 +1,15 @@
 # 2FAS Authenticator (Vicinae)
 
+> **Unofficial Linux port.** This is a community port of the
+> [2FAS Authenticator Raycast extension](https://github.com/LockeAG/raycast-2fas-authenticator)
+> by [Adrian Galvez (LockeAG)](https://github.com/LockeAG), used under the MIT
+> license. It is not affiliated with or endorsed by the original author,
+> Raycast, or 2FAS. If you are on macOS or Windows, use the
+> [original extension](https://www.raycast.com/Lock/2fas-authenticator).
+
 Search and copy 2FA (TOTP) codes from your [2FAS Authenticator](https://2fas.com/) export, stored offline in an encrypted local vault.
 
-This is a **Linux port** of the [Raycast extension by Lock (Adrian Galvez)](https://github.com/raycast/extensions/tree/main/extensions/2fas-authenticator) for [Vicinae](https://vicinae.com/). All vault logic, TOTP generation and UI come from the original extension; the platform-specific keychain layer was replaced with a Linux equivalent.
+This is a **Linux port** of the [Raycast extension by Adrian Galvez (LockeAG)](https://github.com/LockeAG/raycast-2fas-authenticator) for [Vicinae](https://vicinae.com/). Most vault logic, TOTP generation and UI come from the original extension (base commit [`3627d9b`](https://github.com/raycast/extensions/tree/3627d9b15ba4506ca8c8ac9d93c4585c5d2ec7ae/extensions/2fas-authenticator), MIT); the platform-specific keychain layer was replaced with a Linux equivalent. See [NOTICE.md](NOTICE.md) for file-level provenance.
 
 ## How it works
 
@@ -93,7 +100,9 @@ Starts a development session with hot reload. Note that a dev session and an ins
 
 ### From the Vicinae store
 
-Not published yet. The intended route is a PR to the [vicinaehq/extensions](https://github.com/vicinaehq/extensions) store repository; until then, install from source as above.
+Not submitted. This repository is a source-only port; install from source as
+described above. If it is ever submitted, the listing will be clearly marked as
+an unofficial port.
 
 ### Uninstall
 
@@ -105,7 +114,42 @@ Search **Uninstall Extension** in the root search, or delete `~/.local/share/vic
 2. **Import Vault** — pick your `.2fas` export file and enter the export password if you set one.
 3. **Search OTP** — live codes with 1-second refresh; Enter copies the code and closes the window.
 
+## Upstream and provenance
+
+- Upstream source: [LockeAG/raycast-2fas-authenticator](https://github.com/LockeAG/raycast-2fas-authenticator)
+  (also published in the [Raycast store](https://www.raycast.com/Lock/2fas-authenticator)).
+- Base commit: [`3627d9b15ba4506ca8c8ac9d93c4585c5d2ec7ae`](https://github.com/raycast/extensions/tree/3627d9b15ba4506ca8c8ac9d93c4585c5d2ec7ae/extensions/2fas-authenticator).
+- File-level provenance and the list of verbatim files: [NOTICE.md](NOTICE.md).
+- License: [MIT](LICENSE), with the original copyright notice retained.
+
+Upstream is tracked on a best-effort basis. Security fixes to shared logic will
+be ported when they apply and noted in [CHANGELOG.md](CHANGELOG.md). The Linux
+keychain layer is deliberately isolated and MIT-licensed so it can be
+contributed back upstream if the original author wants Linux support.
+
+## Contributing back
+
+- **Shared logic** (2FAS export parsing, TOTP generation, vault format): please
+  also report or fix upstream at
+  [LockeAG/raycast-2fas-authenticator](https://github.com/LockeAG/raycast-2fas-authenticator/issues).
+- **Port-specific issues** (Secret Service/keyring, Vicinae APIs, installation):
+  open an issue in this repository.
+- Security reports: follow [SECURITY.md](SECURITY.md) and use a private advisory.
+- Do not copy upstream store badges, screenshots or reviews into this
+  repository; take your own screenshots if needed.
+- Upstream sync steps and commit-trailer conventions are in
+  [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Credits
 
-- Original extension: [2FAS Authenticator for Raycast](https://github.com/raycast/extensions/tree/main/extensions/2fas-authenticator) by Lock (Adrian Galvez), MIT licensed.
+- Original extension: [2FAS Authenticator for Raycast](https://github.com/LockeAG/raycast-2fas-authenticator)
+  by [Adrian Galvez (LockeAG)](https://github.com/LockeAG), MIT. Also on the
+  [Raycast store](https://www.raycast.com/Lock/2fas-authenticator).
+- Windows support in the upstream extension: MushuDG (not included in this
+  Linux port).
 - [Vicinae](https://github.com/vicinaehq/vicinae) — Raycast-compatible launcher for Linux.
+
+## License
+
+MIT. The original copyright notice is retained; see [LICENSE](LICENSE) and
+[NOTICE.md](NOTICE.md).

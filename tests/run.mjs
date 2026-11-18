@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 /**
  * Test runner: bundles tests/vault.test.ts with esbuild (stubbing
  * @vicinae/api) and executes it with the node:test runner.

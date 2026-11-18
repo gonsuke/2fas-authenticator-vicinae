@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: MIT
+// Copyright (c) 2026 Adrian Galvez (LockeAG) — original 2FAS Authenticator
+// Raycast extension (https://github.com/LockeAG/raycast-2fas-authenticator).
+// Taken verbatim from upstream; see NOTICE.md.
+
 import { createDecipheriv, createHash, pbkdf2Sync } from "crypto";
 import { readFileSync, statSync } from "fs";
 import type { VaultService } from "./vault";

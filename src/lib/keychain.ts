@@ -1,3 +1,8 @@
+// SPDX-License-Identifier: MIT
+// Linux/Vicinae reimplementation of the vault keychain layer. The public
+// interface and error taxonomy are derived from the 2FAS Authenticator Raycast
+// extension by Adrian Galvez (LockeAG), MIT. See NOTICE.md.
+
 import { execFileSync } from "child_process";
 
 /**

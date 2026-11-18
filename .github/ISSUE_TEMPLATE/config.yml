@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Upstream Raycast extension issues
+    url: https://github.com/LockeAG/raycast-2fas-authenticator/issues
+    about: Report bugs in shared vault, TOTP or 2FAS parsing logic upstream.
+  - name: Private security report
+    url: https://github.com/gonsuke/2fas-authenticator-vicinae/security/advisories/new
+    about: Please report vulnerabilities privately, not in a public issue.

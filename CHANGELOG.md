@@ -2,6 +2,13 @@
 
 All notable changes to this Vicinae port are documented here. The upstream Raycast extension's history is not reproduced.
 
+## Provenance
+
+- Upstream: [2FAS Authenticator for Raycast](https://github.com/LockeAG/raycast-2fas-authenticator) by Adrian Galvez (LockeAG), MIT.
+- Base commit: [`3627d9b15ba4506ca8c8ac9d93c4585c5d2ec7ae`](https://github.com/raycast/extensions/tree/3627d9b15ba4506ca8c8ac9d93c4585c5d2ec7ae/extensions/2fas-authenticator).
+- File-level provenance: [NOTICE.md](NOTICE.md).
+- Sync policy: shared-logic fixes are ported on a best-effort basis. The Linux keychain layer is maintained here and offered back upstream under MIT.
+
 ## [0.1.0] - 2026-11-17
 
 ### Ported from the Raycast original
